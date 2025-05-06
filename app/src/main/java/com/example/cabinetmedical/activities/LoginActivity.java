@@ -12,7 +12,6 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.cabinetmedical.R;
@@ -27,12 +26,14 @@ public class LoginActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private TextInputLayout inputLayoutPassword;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        editTextPhone = findViewById(R.id.edit_text_phone);
+        editTextPhone = findViewById(R.id.register_fullname);
         editTextPassword = findViewById(R.id.edit_text_password);
         buttonLogin = findViewById(R.id.button_login);
         buttonRegister = findViewById(R.id.button_register);
@@ -117,6 +118,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void openRegistration() {
-        // Open registration screen or show registration dialog
+        Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+        startActivity(intent);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 }
