@@ -11,11 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.example.cabinetmedical.R;
 import com.google.android.material.textfield.TextInputLayout;
+import com.example.cabinetmedical.utils.check;
+
+
 
 public class LoginActivity extends AppCompatActivity {
     private EditText editTextPhone;
@@ -60,25 +61,27 @@ public class LoginActivity extends AppCompatActivity {
         String phoneNumber = editTextPhone.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        if(phoneNumber.startsWith("06")){
-            Log.d("error", phoneNumber);
-        }
-
 
         if (phoneNumber.isEmpty()) {
-            editTextPhone.setError("Username required");
+            editTextPhone.setError("Phone number is required");
             editTextPhone.requestFocus();
             return;
         }
 
-        if(!phoneNumber.startsWith("06")){
-            editTextPhone.setError("Enter a valid phone number - starts with 06");
+        if(phoneNumber.startsWith("0")){
+            editTextPhone.setError("Phone number should not start with 0");
             editTextPhone.requestFocus();
             return;
         }
 
-        if (password.isEmpty()) {
-            inputLayoutPassword.setError("Password required");
+        if(!check.phoneNumber(phoneNumber, "212")){
+            editTextPhone.setError("Invalid phone number format");
+            editTextPhone.requestFocus();
+            return;
+        }
+
+        if (!check.Password(password)) {
+            inputLayoutPassword.setError("Invalid password");
             inputLayoutPassword.setEndIconVisible(false);
             editTextPassword.requestFocus();
             return;
@@ -92,22 +95,30 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void authenticateUser(String username, String password) {
-        // For demonstration purposes only, using hardcoded credentials
-        // TODO: Replace with proper authentication system
-        if (username.equals("admin") && password.equals("admin123")) {
+        String adminUser = getString(R.string.admin_user);
+        String adminPass = getString(R.string.admin_password);
+
+        if (username.equals(adminUser) && password.equals(adminPass)) {
             // Save login status
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("isLoggedIn", true);
             editor.putString("username", username);
             editor.apply();
 
-            // Navigate to main screen
-            startMainActivity();
+            // Navigate to the admin dashboard.
+            startAdminActivity();
         } else {
             // Authentication failed
             progressBar.setVisibility(View.GONE);
             Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void startAdminActivity() {
+        Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 
     private void startMainActivity() {

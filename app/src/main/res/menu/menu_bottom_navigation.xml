@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/navigationHome"
+        android:icon="@drawable/ic_home"
+        android:title="@string/home" />
+
+    <item android:id="@+id/navigationPatientList"
+        android:icon="@drawable/ic_patient_list"
+        android:title="@string/patient_list" />
+
+    <item android:id="@+id/navigationAppointments"
+        android:icon="@drawable/ic_appointements"
+        android:title="@string/appointments_list" />
+
+    <item android:id="@+id/navigationLogout"
+          android:icon="@drawable/ic_logout"
+          android:title="@string/logout" />
+
+
+</menu>

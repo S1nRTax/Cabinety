@@ -9,4 +9,16 @@
     <string name="back_to_login">Have an account? log in.</string>
     <string name="confirm_password">Confirm password</string>
     <string name="create_account">Create Account</string>
+    <string name="admin_user">649369196</string>
+    <string name="admin_password">root@root1</string>
+    <string name="patient_list">List of Patients</string>
+    <string name="home">Home</string>
+    <string name="appointments_list">Appointments</string>
+    <string name="logout">Logout</string>
+    <string name="search">Search</string>
+    <string name="admin_add">Add a patient</string>
+    <string name="admin_edit">Edit a patient</string>
+    <string name="admin_remove">Remove a patient</string>
+    <string name="card_schedule">Schedule</string>
+    <string name="admin_message">Hello Mr admin</string>
 </resources>
