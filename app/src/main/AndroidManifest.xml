@@ -23,8 +23,9 @@
             </intent-filter>
         </activity>
 
-        <!-- Other activities
         <activity android:name=".activities.MainActivity" />
+        <activity android:name=".activities.RegisterActivity"/>
+        <!-- Other activities
         <activity android:name=".activities.PatientListActivity" />
         -->
 

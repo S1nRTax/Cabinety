@@ -1,7 +1,9 @@
 <resources>
-    <string name="app_name">Cabinet Medical</string>
+    <string name="app_name">Cabinety</string>
     <string name="app_logo">Clinic Logo</string>
-    <string name="username">Username</string>
+    <string name="firstname">First name</string>
+    <string name="lastname">Last name</string>
+    <string name="phone_number">Phone number</string>
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
