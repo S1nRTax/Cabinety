@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -18,7 +19,7 @@ import com.example.cabinetmedical.R;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class LoginActivity extends AppCompatActivity {
-    private EditText editTextUsername;
+    private EditText editTextPhone;
     private EditText editTextPassword;
     private Button buttonLogin;
     private Button buttonRegister;
@@ -31,7 +32,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        editTextUsername = findViewById(R.id.edit_text_username);
+        editTextPhone = findViewById(R.id.edit_text_phone);
         editTextPassword = findViewById(R.id.edit_text_password);
         buttonLogin = findViewById(R.id.button_login);
         buttonRegister = findViewById(R.id.button_register);
@@ -55,12 +56,23 @@ public class LoginActivity extends AppCompatActivity {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(editTextPassword.getWindowToken(), 0);
 
-        String username = editTextUsername.getText().toString().trim();
+        String phoneNumber = editTextPhone.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        if (username.isEmpty()) {
-            editTextUsername.setError("Username required");
-            editTextUsername.requestFocus();
+        if(phoneNumber.startsWith("06")){
+            Log.d("error", phoneNumber);
+        }
+
+
+        if (phoneNumber.isEmpty()) {
+            editTextPhone.setError("Username required");
+            editTextPhone.requestFocus();
+            return;
+        }
+
+        if(!phoneNumber.startsWith("06")){
+            editTextPhone.setError("Enter a valid phone number - starts with 06");
+            editTextPhone.requestFocus();
             return;
         }
 
@@ -75,7 +87,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         progressBar.setVisibility(View.VISIBLE);
-        authenticateUser(username, password);
+        authenticateUser(phoneNumber, password);
     }
 
     private void authenticateUser(String username, String password) {
