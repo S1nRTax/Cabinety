@@ -33,7 +33,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getSharedPreferences("LoginPrefs", MODE_PRIVATE).edit().clear().apply();
 
+        // init
         editTextPhone = findViewById(R.id.register_fullname);
         editTextPassword = findViewById(R.id.edit_text_password);
         buttonLogin = findViewById(R.id.button_login);
