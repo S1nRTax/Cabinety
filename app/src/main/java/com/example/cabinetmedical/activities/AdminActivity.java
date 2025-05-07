@@ -34,17 +34,27 @@ public class AdminActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     private void setupBottomNavigation() {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
+            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
 
-            if (itemId == R.id.navigationHome) {
+            if (itemId == R.id.navigationHome && !(currentFragment instanceof HomeAdminFragment)) {
                 loadFragment(new HomeAdminFragment());
                 return true;
-            } else if (itemId == R.id.navigationPatientList) {
+            } else if (itemId == R.id.navigationPatientList && !(currentFragment instanceof PatientListFragment)) {
                 loadFragment(new PatientListFragment());
                 return true;
-            } else if (itemId == R.id.navigationAppointments) {
+            } else if (itemId == R.id.navigationAppointments && !(currentFragment instanceof AppointmentsFragment)) {
                 loadFragment(new AppointmentsFragment());
                 return true;
             } else if (itemId == R.id.navigationLogout) {
@@ -61,9 +71,41 @@ public class AdminActivity extends AppCompatActivity {
         if (currentFragment != null && currentFragment.getClass().equals(fragment.getClass())) {
             return;
         }
+
+        int enterAnim, exitAnim, popEnterAnim, popExitAnim;
+
+        if (shouldAnimateForward(currentFragment, fragment)) {
+            //forward
+            enterAnim = R.anim.slide_in_right;
+            exitAnim = R.anim.slide_out_left;
+            popEnterAnim = R.anim.slide_in_left;
+            popExitAnim = R.anim.slide_out_right;
+        } else {
+            //backward
+            enterAnim = R.anim.slide_in_left;
+            exitAnim = R.anim.slide_out_right;
+            popEnterAnim = R.anim.slide_in_right;
+            popExitAnim = R.anim.slide_out_left;
+        }
+
         getSupportFragmentManager().beginTransaction()
+                .setCustomAnimations(enterAnim, exitAnim, popEnterAnim, popExitAnim)
                 .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
                 .commit();
+    }
+
+    private boolean shouldAnimateForward(Fragment current, Fragment next) {
+        if (current instanceof HomeAdminFragment && next instanceof PatientListFragment) {
+            return true; // Home → Patients
+        }
+        if (current instanceof HomeAdminFragment && next instanceof AppointmentsFragment) {
+            return true; // Home → Appointments
+        }
+        if (current instanceof PatientListFragment && next instanceof AppointmentsFragment) {
+            return true; // Patients → Appointments
+        }
+        return false; // backward.
     }
 
     private void logout() {
