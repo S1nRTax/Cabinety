@@ -19,4 +19,11 @@
         <item name="android:activityCloseExitAnimation">@android:anim/fade_out</item>
     </style>
 
+    <style name="AlertDialogTheme" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/colorPrimaryText</item>
+        <item name="android:background">@drawable/dialog_background</item>
+    </style>
+
 </resources>
