@@ -10,7 +10,7 @@ import com.example.cabinetmedical.models.Appointment;
 
 import java.util.List;
 
-
+@Dao
 public interface AppointmentDao {
 
     @Insert

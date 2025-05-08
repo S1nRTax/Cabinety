@@ -8,10 +8,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Toast;
 
+import com.example.cabinetmedical.viewmodels.PatientViewModel;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.cabinetmedical.R;
 import com.example.cabinetmedical.models.Patient;
 import com.google.android.material.button.MaterialButton;
@@ -25,20 +29,24 @@ public class AddPatientFragment extends Fragment {
     private AutoCompleteTextView actvGender, actvBloodType;
     private MaterialButton btnSubmit;
 
+    private PatientViewModel patientViewModel;
+
     public AddPatientFragment() {
-        // Required empty public constructor
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Use this method for non-view initialization
+
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Simply inflate the layout
+        // inti thte view model.
+        patientViewModel = new ViewModelProvider(this,
+                ViewModelProvider.AndroidViewModelFactory.getInstance(requireActivity().getApplication()))
+                .get(PatientViewModel.class);
         return inflater.inflate(R.layout.fragment_add_patient, container, false);
     }
 
@@ -150,7 +158,10 @@ public class AddPatientFragment extends Fragment {
                 etMedicalHistory.getText().toString()
         );
 
-        // TODO: Save patient to database
-        // Then navigate back or show success message
+        patientViewModel.insert(patient);
+
+        Toast.makeText(getContext(), "Patient added successfully", Toast.LENGTH_SHORT).show();
+        getParentFragmentManager().popBackStack();
     }
+
 }

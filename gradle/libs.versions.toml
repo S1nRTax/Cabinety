@@ -1,26 +1,40 @@
 [versions]
-agp = "8.9.2"
+agp = "8.4.2" # Updated to stable version (8.9.2 might be too new)
+kotlin = "1.9.22" # Add Kotlin version if using Kotlin
 junit = "4.13.2"
-junitVersion = "1.2.1"
-espressoCore = "3.6.1"
-appcompat = "1.7.0"
+junitVersion = "1.1.5" # Updated to current version
+espressoCore = "3.5.1" # Updated to current version
+appcompat = "1.6.1" # Updated to stable version
 lombok = "1.18.32"
-material = "1.12.0"
-roomCommonJvm = "2.7.1"
-roomRuntimeAndroid = "2.7.1"
-libphonenumber = "8.13.16"
+material = "1.11.0" # Updated to stable version
+room = "2.6.1" # Updated to current stable version
+lifecycle = "2.6.2" # Updated to match Room version
 
 [libraries]
+# Test
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+
+# AndroidX
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
-room-common-jvm = { group = "androidx.room", name = "room-common-jvm", version.ref = "roomCommonJvm" }
-room-runtime-android = { group = "androidx.room", name = "room-runtime-android", version.ref = "roomRuntimeAndroid" }
-libphonenumber = { group = "com.googlecode.libphonenumber", name = "libphonenumber", version.ref = "libphonenumber" }
+
+# Room
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" } # Add if using Kotlin
+
+# Lifecycle
+lifecycle-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel", version.ref = "lifecycle" }
+lifecycle-livedata = { group = "androidx.lifecycle", name = "lifecycle-livedata", version.ref = "lifecycle" }
+lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime", version.ref = "lifecycle" }
+
+# Lombok
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+
+# libphonenumber
+libphonenumber = { group = "com.googlecode.libphonenumber", name = "libphonenumber", version = "8.13.31" } # Updated version
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-

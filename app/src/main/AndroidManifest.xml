@@ -27,7 +27,7 @@
 
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.RegisterActivity"/>
-        <activity android:name=".activities.AdminActivity" android:exported="false" />
+        <activity android:name=".activities.AdminActivity" />
 
     </application>
 
