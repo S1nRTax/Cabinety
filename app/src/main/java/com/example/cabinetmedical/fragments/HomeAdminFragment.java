@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
@@ -22,24 +21,42 @@ public class HomeAdminFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_admin_home, container, false);
+        return inflater.inflate(R.layout.fragment_admin_home, container, false);
+    }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        // Initialize UI components
         cardAddPatient = view.findViewById(R.id.cardAddPatient);
         cardEditPatient = view.findViewById(R.id.cardEditPatient);
         cardRemovePatient = view.findViewById(R.id.cardRemovePatient);
         cardSchedule = view.findViewById(R.id.cardSchedule);
 
-        cardAddPatient.setOnClickListener(v -> navigateToFragment(new AddPatientFragment()));
-        cardEditPatient.setOnClickListener(v -> navigateToFragment(new EditPatientFragment()));
-        cardRemovePatient.setOnClickListener(v -> navigateToFragment(new RemovePatientFragment()));
-        cardSchedule.setOnClickListener(v -> navigateToFragment(new ScheduleFragment()));
+        // Set click listener for Add Patient card
+        cardAddPatient.setOnClickListener(v -> {
+            navigateToAddPatient();
+        });
 
-        return view;
+        // Set click listeners for other cards
+        cardEditPatient.setOnClickListener(v -> {
+            // Handle edit patient action
+        });
+
+        cardRemovePatient.setOnClickListener(v -> {
+            // Handle remove patient action
+        });
+
+        cardSchedule.setOnClickListener(v -> {
+            // Handle schedule action
+        });
     }
 
-    private void navigateToFragment(Fragment fragment) {
+    // Method to navigate to AddPatientFragment
+    private void navigateToAddPatient() {
         if (getActivity() instanceof AdminActivity) {
-            ((AdminActivity) getActivity()).loadFragment(fragment);
+            ((AdminActivity) getActivity()).navigateToAddPatient();
         }
     }
 }

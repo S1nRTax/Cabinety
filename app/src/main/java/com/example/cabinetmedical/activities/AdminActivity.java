@@ -6,9 +6,11 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import com.example.cabinetmedical.R;
+import com.example.cabinetmedical.fragments.AddPatientFragment;
 import com.example.cabinetmedical.fragments.AppointmentsFragment;
 import com.example.cabinetmedical.fragments.HomeAdminFragment;
 import com.example.cabinetmedical.fragments.PatientListFragment;
@@ -16,12 +18,11 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class AdminActivity extends AppCompatActivity {
 
-    private CardView cardAddPatient;
-    private CardView cardEditPatient;
-    private CardView cardRemovePatient;
-    private CardView cardSchedule;
-
     private BottomNavigationView bottomNavigationView;
+    private static final String HOME_FRAGMENT_TAG = "HOME_FRAGMENT";
+    private static final String PATIENT_LIST_FRAGMENT_TAG = "PATIENT_LIST_FRAGMENT";
+    private static final String APPOINTMENTS_FRAGMENT_TAG = "APPOINTMENTS_FRAGMENT";
+    private static final String ADD_PATIENT_FRAGMENT_TAG = "ADD_PATIENT_FRAGMENT";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,14 +35,26 @@ public class AdminActivity extends AppCompatActivity {
 
         // Load default fragment
         if (savedInstanceState == null) {
-            loadFragment(new HomeAdminFragment());
+            loadFragment(new HomeAdminFragment(), false, HOME_FRAGMENT_TAG);
         }
     }
 
     @Override
     public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-            getSupportFragmentManager().popBackStack();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        // If we're on a fragment other than Home, go back to Home
+        if (fragmentManager.findFragmentByTag(HOME_FRAGMENT_TAG) == null &&
+                fragmentManager.getBackStackEntryCount() > 0) {
+
+            // Clear the entire back stack
+            fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+            // Load the home fragment
+            loadFragment(new HomeAdminFragment(), false, HOME_FRAGMENT_TAG);
+
+            // Update bottom navigation selection
+            bottomNavigationView.setSelectedItemId(R.id.navigationHome);
         } else {
             super.onBackPressed();
         }
@@ -50,16 +63,16 @@ public class AdminActivity extends AppCompatActivity {
     private void setupBottomNavigation() {
         bottomNavigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-            Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
 
-            if (itemId == R.id.navigationHome && !(currentFragment instanceof HomeAdminFragment)) {
-                loadFragment(new HomeAdminFragment());
+            // Check which navigation item was selected
+            if (itemId == R.id.navigationHome) {
+                loadFragment(new HomeAdminFragment(), false, HOME_FRAGMENT_TAG);
                 return true;
-            } else if (itemId == R.id.navigationPatientList && !(currentFragment instanceof PatientListFragment)) {
-                loadFragment(new PatientListFragment());
+            } else if (itemId == R.id.navigationPatientList) {
+                loadFragment(new PatientListFragment(), false, PATIENT_LIST_FRAGMENT_TAG);
                 return true;
-            } else if (itemId == R.id.navigationAppointments && !(currentFragment instanceof AppointmentsFragment)) {
-                loadFragment(new AppointmentsFragment());
+            } else if (itemId == R.id.navigationAppointments) {
+                loadFragment(new AppointmentsFragment(), false, APPOINTMENTS_FRAGMENT_TAG);
                 return true;
             } else if (itemId == R.id.navigationLogout) {
                 logout();
@@ -69,47 +82,76 @@ public class AdminActivity extends AppCompatActivity {
         });
     }
 
-    public void loadFragment(Fragment fragment) {
-        Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-        // to prevent loading the same fragment two times.
-        if (currentFragment != null && currentFragment.getClass().equals(fragment.getClass())) {
-            return;
+    public void loadFragment(Fragment fragment, boolean addToBackStack, String tag) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        // Set custom animations
+        transaction.setCustomAnimations(
+                R.anim.slide_in_right,
+                R.anim.slide_out_left,
+                R.anim.slide_in_left,
+                R.anim.slide_out_right
+        );
+
+        // Remove any existing fragments first
+        clearAllFragments(fragmentManager);
+
+        // Add the new fragment with a tag
+        transaction.replace(R.id.fragment_container, fragment, tag);
+
+        if (addToBackStack) {
+            transaction.addToBackStack(tag);
         }
 
-        int enterAnim, exitAnim, popEnterAnim, popExitAnim;
-
-        if (shouldAnimateForward(currentFragment, fragment)) {
-            //forward
-            enterAnim = R.anim.slide_in_right;
-            exitAnim = R.anim.slide_out_left;
-            popEnterAnim = R.anim.slide_in_left;
-            popExitAnim = R.anim.slide_out_right;
-        } else {
-            //backward
-            enterAnim = R.anim.slide_in_left;
-            exitAnim = R.anim.slide_out_right;
-            popEnterAnim = R.anim.slide_in_right;
-            popExitAnim = R.anim.slide_out_left;
-        }
-
-        getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(enterAnim, exitAnim, popEnterAnim, popExitAnim)
-                .replace(R.id.fragment_container, fragment)
-                .addToBackStack(null)
-                .commit();
+        // Commit the transaction with allowStateLoss to avoid IllegalStateException
+        transaction.commitAllowingStateLoss();
     }
 
-    private boolean shouldAnimateForward(Fragment current, Fragment next) {
-        if (current instanceof HomeAdminFragment && next instanceof PatientListFragment) {
-            return true; // Home → Patients
+    /**
+     * Method to clear all fragments from the manager to avoid overlapping
+     */
+    private void clearAllFragments(FragmentManager fragmentManager) {
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            FragmentManager.BackStackEntry first = fragmentManager.getBackStackEntryAt(0);
+            fragmentManager.popBackStack(first.getId(), FragmentManager.POP_BACK_STACK_INCLUSIVE);
         }
-        if (current instanceof HomeAdminFragment && next instanceof AppointmentsFragment) {
-            return true; // Home → Appointments
+
+        Fragment homeFragment = fragmentManager.findFragmentByTag(HOME_FRAGMENT_TAG);
+        Fragment patientListFragment = fragmentManager.findFragmentByTag(PATIENT_LIST_FRAGMENT_TAG);
+        Fragment appointmentsFragment = fragmentManager.findFragmentByTag(APPOINTMENTS_FRAGMENT_TAG);
+        Fragment addPatientFragment = fragmentManager.findFragmentByTag(ADD_PATIENT_FRAGMENT_TAG);
+
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+
+        if (homeFragment != null) {
+            transaction.remove(homeFragment);
         }
-        if (current instanceof PatientListFragment && next instanceof AppointmentsFragment) {
-            return true; // Patients → Appointments
+        if (patientListFragment != null) {
+            transaction.remove(patientListFragment);
         }
-        return false; // backward.
+        if (appointmentsFragment != null) {
+            transaction.remove(appointmentsFragment);
+        }
+        if (addPatientFragment != null) {
+            transaction.remove(addPatientFragment);
+        }
+
+        // Apply removals if needed
+        if (!transaction.isEmpty()) {
+            transaction.commitNowAllowingStateLoss();
+        }
+    }
+
+    /**
+     * Method to navigate to AddPatientFragment
+     */
+    public void navigateToAddPatient() {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        clearAllFragments(fragmentManager);
+
+        // Then load the AddPatientFragment with animation
+        loadFragment(new AddPatientFragment(), true, ADD_PATIENT_FRAGMENT_TAG);
     }
 
     private void logout() {

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
     android:clipToPadding="false"
     android:clipChildren="false"
     android:clickable="true"
@@ -29,13 +28,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:src="@drawable/header_background"
                 android:scaleType="centerCrop" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="#90000000"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/imageHeader" />
 
             <ImageView
                 android:id="@+id/imageMenu"
@@ -96,6 +88,11 @@
                     android:textSize="18sp"
                     tools:ignore="Autofill"
                     android:hint="@string/search" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:background="#90000000" />
             </LinearLayout>
 
             <View

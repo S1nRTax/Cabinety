@@ -25,4 +25,18 @@
     <string name="logout_confirmation">Are you sure you want to logout?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="Field_allergies">Allergies</string>
+    <string name="Field_bloodtype">Blood Type</string>
+    <string name="Field_medicalhistory">Medical History</string>
+    <string name="Button_addpatient">Save Patient</string>
+    <string name="Text_medicalinfo">Medical Information</string>
+    <string name="Field_address">Address</string>
+    <string name="Field_email">Email</string>
+    <string name="Field_phonenumber">Phone Number</string>
+    <string name="Text_contactinfo">Contact Information</string>
+    <string name="Field_gender">Gender</string>
+    <string name="Field_dob">Date of Birth</string>
+    <string name="Field_lastname">Last Name</string>
+    <string name="Field_firstname">First Name</string>
+    <string name="Text_personnalinfo">Personal Information</string>
 </resources>
