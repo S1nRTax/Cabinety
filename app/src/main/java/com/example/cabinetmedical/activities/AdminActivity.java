@@ -7,9 +7,11 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import com.example.cabinetmedical.R;
+import com.example.cabinetmedical.fragments.AppointmentsFragment;
+import com.example.cabinetmedical.fragments.HomeAdminFragment;
+import com.example.cabinetmedical.fragments.PatientListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class AdminActivity extends AppCompatActivity {
@@ -67,7 +69,7 @@ public class AdminActivity extends AppCompatActivity {
         });
     }
 
-    private void loadFragment(Fragment fragment) {
+    public void loadFragment(Fragment fragment) {
         Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         // to prevent loading the same fragment two times.
         if (currentFragment != null && currentFragment.getClass().equals(fragment.getClass())) {

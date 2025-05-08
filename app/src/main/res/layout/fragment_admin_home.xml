@@ -7,14 +7,15 @@
     android:background="@color/colorBackground"
     android:clipToPadding="false"
     android:clipChildren="false"
+    android:clickable="true"
+    android:focusable="true"
     tools:context=".activities.AdminActivity">
-
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintTop_toTopOf="parent"
-        >
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -34,8 +35,7 @@
                 android:layout_height="0dp"
                 android:background="#90000000"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="@id/imageHeader"
-                />
+                app:layout_constraintBottom_toBottomOf="@id/imageHeader" />
 
             <ImageView
                 android:id="@+id/imageMenu"
@@ -49,8 +49,7 @@
                 android:padding="7dp"
                 app:tint="@color/colorWhite"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="18dp"
-                />
+                android:layout_marginEnd="18dp" />
 
             <TextView
                 android:id="@+id/textHello"
@@ -64,6 +63,7 @@
                 android:textSize="23sp" />
 
             <LinearLayout
+                android:id="@+id/layoutSearch"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="4dp"
@@ -104,20 +104,22 @@
                 android:layout_height="1dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="@+id/imageHeader"
-                android:layout_marginBottom="50dp"
-                />
+                android:layout_marginBottom="50dp" />
 
-
+            <!-- First row -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardAddPatient"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toStartOf="@id/cardEditPatient"
-                android:layout_marginEnd="10dp"
                 app:layout_constraintTop_toBottomOf="@id/viewSupporter"
                 app:layout_constraintStart_toStartOf="parent"
-                app:cardBackgroundColor="@drawable/card_selector"
                 android:layout_marginStart="25dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="20dp"
+                android:foreground="@drawable/ripple_effect"
+                app:cardBackgroundColor="@drawable/card_selector"
+                android:backgroundTint="@color/colorWhite"
                 app:cardCornerRadius="8dp">
 
                 <LinearLayout
@@ -132,8 +134,7 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_add"
-                        />
+                        android:src="@drawable/ic_add" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -143,22 +144,21 @@
                         android:textColor="@color/colorPrimaryText"
                         android:textStyle="bold"
                         android:textSize="16sp"/>
-
                 </LinearLayout>
-
             </androidx.cardview.widget.CardView>
-
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardEditPatient"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                android:layout_marginStart="10dp"
-                app:layout_constraintTop_toBottomOf="@id/viewSupporter"
                 app:layout_constraintStart_toEndOf="@id/cardAddPatient"
-                app:cardBackgroundColor="@color/colorWhite"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/cardAddPatient"
                 android:layout_marginEnd="25dp"
+                android:layout_marginStart="10dp"
+                android:foreground="@drawable/ripple_effect"
+                app:cardBackgroundColor="@drawable/card_selector"
+                android:backgroundTint="@color/colorWhite"
                 app:cardCornerRadius="8dp">
 
                 <LinearLayout
@@ -182,28 +182,24 @@
                         android:text="@string/admin_edit"
                         android:textStyle="bold"
                         android:textSize="16sp"
-                        android:textColor="@color/colorPrimaryText"
-                        />
-
+                        android:textColor="@color/colorPrimaryText" />
                 </LinearLayout>
-
             </androidx.cardview.widget.CardView>
 
+            <!-- Second row -->
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardRemovePatient"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toStartOf="@id/cardSchedule"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginTop="25dp"
-                android:layout_marginBottom="25dp"
-                app:cardBackgroundColor="@color/colorWhite"
-                app:cardCornerRadius="8dp"
-                app:layout_constraintTop_toBottomOf="@+id/cardAddPatient"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
-
+                app:layout_constraintStart_toStartOf="@id/cardAddPatient"
+                app:layout_constraintEnd_toEndOf="@id/cardAddPatient"
+                app:layout_constraintTop_toBottomOf="@id/cardAddPatient"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:foreground="@drawable/ripple_effect"
+                app:cardBackgroundColor="@drawable/card_selector"
+                android:backgroundTint="@color/colorWhite"
+                app:cardCornerRadius="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -213,14 +209,11 @@
                     android:orientation="vertical"
                     tools:ignore="UseCompoundDrawables">
 
-
                     <ImageView
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:src="@drawable/ic_remove"
-                        android:contentDescription="@string/app_name"
-                        />
-
+                        android:contentDescription="@string/app_name" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -230,7 +223,6 @@
                         android:textStyle="bold"
                         android:gravity="center"
                         android:textSize="16sp" />
-
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -238,16 +230,13 @@
                 android:id="@+id/cardSchedule"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardEditPatient"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/cardRemovePatient"
-                android:layout_marginStart="10dp"
-                app:cardCornerRadius="8dp"
-                app:cardBackgroundColor="@color/colorWhite"
-                android:layout_marginTop="25dp"
-                android:layout_marginEnd="25dp"
-                android:layout_marginBottom="25dp">
+                app:layout_constraintStart_toStartOf="@id/cardEditPatient"
+                app:layout_constraintEnd_toEndOf="@id/cardEditPatient"
+                app:layout_constraintTop_toTopOf="@id/cardRemovePatient"
+                android:foreground="@drawable/ripple_effect"
+                app:cardBackgroundColor="@drawable/card_selector"
+                android:backgroundTint="@color/colorWhite"
+                app:cardCornerRadius="8dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -261,7 +250,8 @@
                         android:layout_width="100dp"
                         android:layout_height="100dp"
                         android:contentDescription="@string/app_name"
-                        android:src="@drawable/ic_schedule"/>
+                        android:src="@drawable/ic_schedule"
+                        />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -272,19 +262,15 @@
                         android:textColor="@color/colorPrimaryText"
                         android:gravity="center"/>
                 </LinearLayout>
-
-
-
             </androidx.cardview.widget.CardView>
 
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                app:layout_constraintTop_toBottomOf="@id/cardRemovePatient"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </ScrollView>
-
-
-
-
-
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
