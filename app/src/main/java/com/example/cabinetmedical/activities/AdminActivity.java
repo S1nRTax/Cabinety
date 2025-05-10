@@ -16,6 +16,7 @@ import com.example.cabinetmedical.fragments.EditPatientFragment;
 import com.example.cabinetmedical.fragments.HomeAdminFragment;
 import com.example.cabinetmedical.fragments.PatientListFragment;
 import com.example.cabinetmedical.fragments.RemovePatientFragment;
+import com.example.cabinetmedical.fragments.ScheduleFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class AdminActivity extends AppCompatActivity {
@@ -174,6 +175,14 @@ public class AdminActivity extends AppCompatActivity {
 
     public void navigateToListOfPatient(){
         PatientListFragment fragment = new PatientListFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void navigateToSchedule(){
+        ScheduleFragment fragment = new ScheduleFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)

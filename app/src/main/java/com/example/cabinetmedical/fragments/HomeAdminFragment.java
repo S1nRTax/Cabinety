@@ -46,7 +46,7 @@ public class HomeAdminFragment extends Fragment {
         });
 
         cardSchedule.setOnClickListener(v -> {
-            // Handle schedule action
+            navigateToSchedule();
         });
     }
 
@@ -65,6 +65,12 @@ public class HomeAdminFragment extends Fragment {
     private void navigateToEditPatient() {
         if (getActivity() instanceof AdminActivity) {
             ((AdminActivity) getActivity()).navigateToEditPatient();
+        }
+    }
+
+    private void navigateToSchedule(){
+        if (getActivity() instanceof AdminActivity) {
+            ((AdminActivity) getActivity()).navigateToSchedule();
         }
     }
 }
