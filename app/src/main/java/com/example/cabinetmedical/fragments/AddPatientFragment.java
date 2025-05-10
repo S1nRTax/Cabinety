@@ -3,6 +3,7 @@ package com.example.cabinetmedical.fragments;
 import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,8 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
+
+import com.example.cabinetmedical.data.local.dao.PatientDao;
+import com.example.cabinetmedical.data.local.database.AppDatabase;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.example.cabinetmedical.R;
 import com.example.cabinetmedical.data.local.entity.Patient;
@@ -22,6 +27,7 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class AddPatientFragment extends Fragment {
 
@@ -134,7 +140,6 @@ public class AddPatientFragment extends Fragment {
 
         if (patientId > 0) {
             Toast.makeText(requireContext(), "Patient added successfully", Toast.LENGTH_SHORT).show();
-            // Navigate back to the patient list or details
             Navigation.findNavController(requireView()).navigateUp();
         } else {
             Toast.makeText(requireContext(), "Failed to add patient", Toast.LENGTH_SHORT).show();

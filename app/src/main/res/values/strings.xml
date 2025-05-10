@@ -39,6 +39,12 @@
     <string name="Field_lastname">Last Name</string>
     <string name="Field_firstname">First Name</string>
     <string name="Text_personnalinfo">Personal Information</string>
+    <string name="text_allergies">Allergies</string>
+    <string name="date_of_birth_format">Date of Birth: %s</string>
+    <string name="gender_format">Gender: %s</string>
+    <string name="blood_type_format">Blood Type: %s</string>
+    <string name="no_allergies">No known allergies</string>
+    <string name="no_medical_history">No medical history available</string>
 
     <string-array name="gender_options">
         <item>Male</item>
