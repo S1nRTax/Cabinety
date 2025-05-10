@@ -21,4 +21,16 @@
         android:name="com.example.cabinetmedical.fragments.PatientDetailFragment"
         android:label="Patient Details"
         tools:layout="@layout/fragment_patient_detail" />
+
+
+    <fragment
+        android:id="@+id/addPatientFragment"
+        android:name="com.example.cabinetmedical.fragments.AddPatientFragment"
+        android:label="Add Patient">
+        <action
+            android:id="@+id/action_addPatientFragment_to_patientListFragment"
+            app:destination="@id/patientListFragment"
+            app:popUpTo="@id/patientListFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
 </navigation>

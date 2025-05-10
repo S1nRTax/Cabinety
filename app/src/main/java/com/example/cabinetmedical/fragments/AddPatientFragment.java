@@ -17,6 +17,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.example.cabinetmedical.activities.AdminActivity;
 import com.example.cabinetmedical.data.local.dao.PatientDao;
 import com.example.cabinetmedical.data.local.database.AppDatabase;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
@@ -140,7 +141,9 @@ public class AddPatientFragment extends Fragment {
 
         if (patientId > 0) {
             Toast.makeText(requireContext(), "Patient added successfully", Toast.LENGTH_SHORT).show();
-            Navigation.findNavController(requireView()).navigateUp();
+            if (getActivity() instanceof AdminActivity) {
+                ((AdminActivity) getActivity()).navigateToListOfPatient();
+            }
         } else {
             Toast.makeText(requireContext(), "Failed to add patient", Toast.LENGTH_SHORT).show();
         }

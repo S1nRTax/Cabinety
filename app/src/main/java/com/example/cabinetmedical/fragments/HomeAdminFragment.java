@@ -28,20 +28,17 @@ public class HomeAdminFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Initialize UI components
         cardAddPatient = view.findViewById(R.id.cardAddPatient);
         cardEditPatient = view.findViewById(R.id.cardEditPatient);
         cardRemovePatient = view.findViewById(R.id.cardRemovePatient);
         cardSchedule = view.findViewById(R.id.cardSchedule);
 
-        // Set click listener for Add Patient card
         cardAddPatient.setOnClickListener(v -> {
             navigateToAddPatient();
         });
 
-        // Set click listeners for other cards
         cardEditPatient.setOnClickListener(v -> {
-            // Handle edit patient action
+            navigateToEditPatient();
         });
 
         cardRemovePatient.setOnClickListener(v -> {
@@ -53,7 +50,6 @@ public class HomeAdminFragment extends Fragment {
         });
     }
 
-    // Method to navigate to AddPatientFragment
     private void navigateToAddPatient() {
         if (getActivity() instanceof AdminActivity) {
             ((AdminActivity) getActivity()).navigateToAddPatient();
@@ -63,6 +59,12 @@ public class HomeAdminFragment extends Fragment {
     private void navigateToRemovePatient() {
         if (getActivity() instanceof AdminActivity) {
             ((AdminActivity) getActivity()).navigateToRemovePatient();
+        }
+    }
+
+    private void navigateToEditPatient() {
+        if (getActivity() instanceof AdminActivity) {
+            ((AdminActivity) getActivity()).navigateToEditPatient();
         }
     }
 }

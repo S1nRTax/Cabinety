@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.cabinetmedical.R;
 import com.example.cabinetmedical.fragments.AddPatientFragment;
 import com.example.cabinetmedical.fragments.AppointmentsFragment;
+import com.example.cabinetmedical.fragments.EditPatientFragment;
 import com.example.cabinetmedical.fragments.HomeAdminFragment;
 import com.example.cabinetmedical.fragments.PatientListFragment;
 import com.example.cabinetmedical.fragments.RemovePatientFragment;
@@ -157,6 +158,22 @@ public class AdminActivity extends AppCompatActivity {
 
     public void navigateToRemovePatient() {
         RemovePatientFragment fragment = new RemovePatientFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void navigateToEditPatient() {
+        EditPatientFragment fragment = new EditPatientFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    public void navigateToListOfPatient(){
+        PatientListFragment fragment = new PatientListFragment();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
