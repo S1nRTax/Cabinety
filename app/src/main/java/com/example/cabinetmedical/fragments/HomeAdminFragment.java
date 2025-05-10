@@ -45,7 +45,7 @@ public class HomeAdminFragment extends Fragment {
         });
 
         cardRemovePatient.setOnClickListener(v -> {
-            // Handle remove patient action
+            navigateToRemovePatient();
         });
 
         cardSchedule.setOnClickListener(v -> {
@@ -57,6 +57,12 @@ public class HomeAdminFragment extends Fragment {
     private void navigateToAddPatient() {
         if (getActivity() instanceof AdminActivity) {
             ((AdminActivity) getActivity()).navigateToAddPatient();
+        }
+    }
+
+    private void navigateToRemovePatient() {
+        if (getActivity() instanceof AdminActivity) {
+            ((AdminActivity) getActivity()).navigateToRemovePatient();
         }
     }
 }

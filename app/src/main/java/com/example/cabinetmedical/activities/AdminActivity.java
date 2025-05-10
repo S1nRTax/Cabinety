@@ -14,6 +14,7 @@ import com.example.cabinetmedical.fragments.AddPatientFragment;
 import com.example.cabinetmedical.fragments.AppointmentsFragment;
 import com.example.cabinetmedical.fragments.HomeAdminFragment;
 import com.example.cabinetmedical.fragments.PatientListFragment;
+import com.example.cabinetmedical.fragments.RemovePatientFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class AdminActivity extends AppCompatActivity {
@@ -152,6 +153,14 @@ public class AdminActivity extends AppCompatActivity {
 
         // Then load the AddPatientFragment with animation
         loadFragment(new AddPatientFragment(), true, ADD_PATIENT_FRAGMENT_TAG);
+    }
+
+    public void navigateToRemovePatient() {
+        RemovePatientFragment fragment = new RemovePatientFragment();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void logout() {

@@ -64,4 +64,8 @@ public interface PatientDao {
            "OR last_name LIKE '%' || :searchQuery || '%' " +
            "ORDER BY last_name, first_name")
     LiveData<List<Patient>> searchPatients(String searchQuery);
+
+
+    @Query("SELECT * FROM patients WHERE last_name = :lastName LIMIT 1")
+    LiveData<Patient> getPatientByLastName(String lastName);
 }

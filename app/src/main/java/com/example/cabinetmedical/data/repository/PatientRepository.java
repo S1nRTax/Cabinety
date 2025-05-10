@@ -90,4 +90,9 @@ public class PatientRepository {
     public LiveData<List<Patient>> searchPatients(String query) {
         return patientDao.searchPatients(query);
     }
+
+
+    public LiveData<Patient> getPatientByLastName(String lastName) {
+        return patientDao.getPatientByLastName(lastName);
+    }
 }

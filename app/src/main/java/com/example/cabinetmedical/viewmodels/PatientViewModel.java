@@ -79,4 +79,11 @@ public class PatientViewModel extends AndroidViewModel {
     public LiveData<List<Patient>> searchPatients(String query) {
         return repository.searchPatients(query);
     }
+
+
+    public LiveData<Patient> getPatientByLastName(String lastName) {
+        return repository.getPatientByLastName(lastName);
+    }
+
+
 }
