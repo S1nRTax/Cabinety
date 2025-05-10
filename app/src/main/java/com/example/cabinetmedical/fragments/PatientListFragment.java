@@ -95,19 +95,29 @@ public class PatientListFragment extends Fragment implements PatientAdapter.OnPa
 
     @Override
     public void onPatientClick(Patient patient) {
-        if (navController != null) {
-            // Create a bundle with the patient ID
-            Bundle bundle = new Bundle();
-            bundle.putLong("patientId", patient.getId());
+        try {
+            // Safely navigate with null checks
+            if (getView() != null) {
+                NavController navController = Navigation.findNavController(getView());
+                Bundle bundle = new Bundle();
+                bundle.putLong("patientId", patient.getId());
+                navController.navigate(R.id.action_to_patient_detail, bundle);
+            } else {
+                Log.e("PatientListFragment", "View is null, cannot navigate");
+            }
+        } catch (Exception e) {
+            Log.e("PatientListFragment", "Navigation error", e);
+            // Fallback to old FragmentManager if needed
+            Fragment detailFragment = new PatientDetailFragment();
+            Bundle args = new Bundle();
+            args.putLong("patientId", patient.getId());
+            detailFragment.setArguments(args);
 
-            // Log the patient ID before navigation
-            Log.d("PatientListFragment", "Attempting to navigate with patient ID: " + patient.getId());
-
-            // Navigate using the NavController
-            navController.navigate(R.id.action_to_patient_detail, bundle);
-        } else {
-            Log.e("PatientListFragment", "NavController is null");
-            Toast.makeText(requireContext(), "Navigation error", Toast.LENGTH_SHORT).show();
+            requireActivity().getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_container, detailFragment)
+                    .addToBackStack(null)
+                    .commit();
         }
     }
 }
