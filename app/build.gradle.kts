@@ -51,6 +51,7 @@ dependencies {
 
     // Room
     implementation(libs.room.runtime)
+    implementation(libs.navigation.runtime.android)
     annotationProcessor(libs.room.compiler)
 
 

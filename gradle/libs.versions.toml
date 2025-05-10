@@ -8,7 +8,8 @@ appcompat = "1.6.1" # Updated to stable version
 lombok = "1.18.32"
 material = "1.11.0" # Updated to stable version
 room = "2.6.1" # Updated to current stable version
-lifecycle = "2.6.2" # Updated to match Room version
+lifecycle = "2.6.2"
+navigationRuntimeAndroid = "2.9.0" # Updated to match Room version
 
 [libraries]
 # Test
@@ -34,7 +35,8 @@ lifecycle-runtime = { group = "androidx.lifecycle", name = "lifecycle-runtime", 
 lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
 
 # libphonenumber
-libphonenumber = { group = "com.googlecode.libphonenumber", name = "libphonenumber", version = "8.13.31" } # Updated version
+libphonenumber = { group = "com.googlecode.libphonenumber", name = "libphonenumber", version = "8.13.31" }
+navigation-runtime-android = { group = "androidx.navigation", name = "navigation-runtime-android", version.ref = "navigationRuntimeAndroid" } # Updated version
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
