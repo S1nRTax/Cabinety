@@ -7,15 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
-
+import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.example.cabinetmedical.R;
 import com.example.cabinetmedical.data.local.entity.Patient;
 import com.example.cabinetmedical.viewmodels.PatientViewModel;
@@ -27,7 +26,7 @@ import java.util.Calendar;
 public class AddPatientFragment extends Fragment {
 
     private TextInputEditText etFirstName, etLastName, etDob, etPhone, etEmail, etAddress, etAllergies, etMedicalHistory;
-    private AutoCompleteTextView actvGender, actvBloodType;
+    private MaterialAutoCompleteTextView actvGender, actvBloodType;
     private MaterialButton btnSubmit;
     private PatientViewModel patientViewModel;
 
@@ -69,25 +68,31 @@ public class AddPatientFragment extends Fragment {
     }
 
     private void setupGenderDropdown() {
-        String[] genders = new String[]{"Male", "Female", "Other"};
+        String[] genders = getResources().getStringArray(R.array.gender_options);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 requireContext(),
                 R.layout.dropdown_menu_item,
-                R.id.dropdown_item,
                 genders
         );
         actvGender.setAdapter(adapter);
+        actvGender.setOnClickListener(v -> actvGender.showDropDown());
+        actvGender.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) actvGender.showDropDown();
+        });
     }
 
     private void setupBloodTypeDropdown() {
-        String[] bloodTypes = new String[]{"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "Unknown"};
+        String[] bloodTypes = getResources().getStringArray(R.array.blood_type_options);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 requireContext(),
                 R.layout.dropdown_menu_item,
-                R.id.dropdown_item,
                 bloodTypes
         );
         actvBloodType.setAdapter(adapter);
+        actvBloodType.setOnClickListener(v -> actvBloodType.showDropDown());
+        actvBloodType.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) actvBloodType.showDropDown();
+        });
     }
 
     private void showDatePickerDialog() {

@@ -104,7 +104,9 @@
                 android:layout_height="wrap_content"
                 android:inputType="none"
                 android:clickable="true"
-                android:focusable="true" />
+                android:focusable="false"
+                android:completionHint="Select gender"
+                android:completionThreshold="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -208,7 +210,9 @@
                 android:layout_height="wrap_content"
                 android:inputType="none"
                 android:clickable="true"
-                android:focusable="true" />
+                android:focusable="false"
+                android:completionHint="Select gender"
+                android:completionThreshold="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Allergies -->
