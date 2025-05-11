@@ -47,6 +47,7 @@
     <string name="no_medical_history">No medical history available</string>
     <string name="accept">accept</string>
     <string name="cancel">cancel</string>
+    <string name="reject">reject\n</string>
 
     <string-array name="gender_options">
         <item>Male</item>
@@ -55,8 +56,9 @@
 
     <string-array name="appointment_statuses">
         <item>CONFIRMED</item>
-        <item>ON_HOLD</item>
+        <item>PENDING</item>
         <item>CANCELLED</item>
+        <item>REJECTED</item>
     </string-array>
 
     <string-array name="blood_type_options">

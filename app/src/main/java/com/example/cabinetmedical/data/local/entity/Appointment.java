@@ -9,7 +9,6 @@ import com.example.cabinetmedical.data.local.converters.DateConverter;
 
 import java.util.Date;
 
-import java.util.Date;
 
 @Entity(tableName = "appointments",
         foreignKeys = @ForeignKey(entity = Patient.class,
@@ -24,6 +23,10 @@ public class Appointment {
     private Date appointmentTime;
     private String purpose;
     private String status; // "CONFIRMED", "FINISHED", "CANCELLED", "ON_HOLD"
+    public static final String STATUS_PENDING = "PENDING";
+    public static final String STATUS_CONFIRMED = "CONFIRMED";
+    public static final String STATUS_REJECTED = "REJECTED";
+    public static final String STATUS_CANCELLED = "CANCELLED";
     private String notes;
 
     // Constructors, getters and setters

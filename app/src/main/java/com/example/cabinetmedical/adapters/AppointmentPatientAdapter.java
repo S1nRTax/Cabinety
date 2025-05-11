@@ -23,6 +23,7 @@ public class AppointmentPatientAdapter extends RecyclerView.Adapter<AppointmentP
 
     public interface OnAppointmentActionListener {
         void onAcceptAppointment(Appointment appointment);
+        void onRejectAppointment(Appointment appointment);
         void onCancelAppointment(Appointment appointment);
     }
 
@@ -52,14 +53,35 @@ public class AppointmentPatientAdapter extends RecyclerView.Adapter<AppointmentP
         holder.tvAppointmentPurpose.setText(appointment.getPurpose());
         holder.tvAppointmentStatus.setText("Status: " + appointment.getStatus());
 
-        // Only show accept button if status is pending
-        boolean isPending = "PENDING".equals(appointment.getStatus());
-        holder.btnAccept.setEnabled(isPending);
-        holder.btnAccept.setVisibility(isPending ? View.VISIBLE : View.GONE);
+        switch(appointment.getStatus()) {
+            case Appointment.STATUS_PENDING:
+                holder.btnAccept.setVisibility(View.VISIBLE);
+                holder.btnReject.setVisibility(View.VISIBLE);
+                holder.btnCancel.setVisibility(View.GONE);
+                break;
+            case Appointment.STATUS_CONFIRMED:
+                holder.btnAccept.setVisibility(View.GONE);
+                holder.btnReject.setVisibility(View.GONE);
+                holder.btnCancel.setVisibility(View.VISIBLE);
+                break;
+            case Appointment.STATUS_REJECTED:
+            case Appointment.STATUS_CANCELLED:
+                holder.btnAccept.setVisibility(View.GONE);
+                holder.btnReject.setVisibility(View.GONE);
+                holder.btnCancel.setVisibility(View.GONE);
+                break;
+        }
 
+        // Set click listeners
         holder.btnAccept.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onAcceptAppointment(appointment);
+            }
+        });
+
+        holder.btnReject.setOnClickListener(v -> {
+            if (listener != null) {
+                listener.onRejectAppointment(appointment);
             }
         });
 
@@ -77,7 +99,7 @@ public class AppointmentPatientAdapter extends RecyclerView.Adapter<AppointmentP
 
     static class AppointmentViewHolder extends RecyclerView.ViewHolder {
         TextView tvAppointmentTime, tvAppointmentPurpose, tvAppointmentStatus;
-        Button btnAccept, btnCancel;
+        Button btnAccept, btnReject, btnCancel;
 
         public AppointmentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -85,6 +107,7 @@ public class AppointmentPatientAdapter extends RecyclerView.Adapter<AppointmentP
             tvAppointmentPurpose = itemView.findViewById(R.id.tvAppointmentPurpose);
             tvAppointmentStatus = itemView.findViewById(R.id.tvAppointmentStatus);
             btnAccept = itemView.findViewById(R.id.btnAccept);
+            btnReject = itemView.findViewById(R.id.btnReject);
             btnCancel = itemView.findViewById(R.id.btnCancel);
         }
     }

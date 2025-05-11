@@ -35,9 +35,18 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        getSharedPreferences("LoginPrefs", MODE_PRIVATE).edit().clear().apply();
 
+        SharedPreferences prefs = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+        if (prefs.getBoolean("isLoggedIn", false)) {
+            if (prefs.getBoolean("isAdmin", false)) {
+                startActivity(new Intent(this, AdminActivity.class));
+            } else {
+                startActivity(new Intent(this, MainActivity.class));
+            }
+            finish();
+            return;
+        }
+        setContentView(R.layout.activity_login);
         // init
         editTextPhone = findViewById(R.id.register_fullname);
         editTextPassword = findViewById(R.id.edit_text_password);
@@ -108,14 +117,8 @@ public class LoginActivity extends AppCompatActivity {
 
         if (phoneNumber.equals(adminUser) && password.equals(adminPass)) {
             // Admin login
-            SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putBoolean("isLoggedIn", true);
-            editor.putString("username", phoneNumber);
-            editor.putBoolean("isAdmin", true);
-            editor.apply();
-            progressBar.setVisibility(View.GONE);
-            startActivity(new Intent(this, AdminActivity.class));
-            finish();
+            saveLoginState(true, phoneNumber, true, -1);
+            startAdminActivity();
             return;
         }
 
@@ -125,19 +128,21 @@ public class LoginActivity extends AppCompatActivity {
             progressBar.setVisibility(View.GONE);
 
             if (patient != null) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("isLoggedIn", true);
-                editor.putString("username", phoneNumber);
-                editor.putBoolean("isAdmin", false);
-                editor.putLong("patientId", patient.getId());
-                editor.apply();
-
-                startActivity(new Intent(this, MainActivity.class));
-                finish();
+                saveLoginState(true, phoneNumber, false, patient.getId());
+                startMainActivity();
             } else {
                 Toast.makeText(this, "Invalid phone number or password", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void saveLoginState(boolean isLoggedIn, String username, boolean isAdmin, long patientId) {
+        SharedPreferences.Editor editor = getSharedPreferences("LoginPrefs", MODE_PRIVATE).edit();
+        editor.putBoolean("isLoggedIn", isLoggedIn);
+        editor.putString("username", username);
+        editor.putBoolean("isAdmin", isAdmin);
+        editor.putLong("patientId", patientId);
+        editor.apply();  // Make sure to use apply() instead of commit()
     }
 
     private void startAdminActivity() {
