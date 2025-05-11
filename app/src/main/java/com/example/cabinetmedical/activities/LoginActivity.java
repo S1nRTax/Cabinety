@@ -12,7 +12,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.cabinetmedical.R;
+import com.example.cabinetmedical.viewmodels.PatientViewModel;
 import com.google.android.material.textfield.TextInputLayout;
 import com.example.cabinetmedical.utils.check;
 
@@ -96,24 +99,45 @@ public class LoginActivity extends AppCompatActivity {
         authenticateUser(phoneNumber, password);
     }
 
-    private void authenticateUser(String username, String password) {
+    private void authenticateUser(String phoneNumber, String password) {
+        progressBar.setVisibility(View.VISIBLE);
+
+        // Admin check
         String adminUser = getString(R.string.admin_user);
         String adminPass = getString(R.string.admin_password);
 
-        if (username.equals(adminUser) && password.equals(adminPass)) {
-            // Save login status
+        if (phoneNumber.equals(adminUser) && password.equals(adminPass)) {
+            // Admin login
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putBoolean("isLoggedIn", true);
-            editor.putString("username", username);
+            editor.putString("username", phoneNumber);
+            editor.putBoolean("isAdmin", true);
             editor.apply();
-
-            // Navigate to the admin dashboard.
-            startAdminActivity();
-        } else {
-            // Authentication failed
             progressBar.setVisibility(View.GONE);
-            Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+            startActivity(new Intent(this, AdminActivity.class));
+            finish();
+            return;
         }
+
+        // Patient login
+        PatientViewModel patientViewModel = new ViewModelProvider(this).get(PatientViewModel.class);
+        patientViewModel.loginPatient(phoneNumber, password).observe(this, patient -> {
+            progressBar.setVisibility(View.GONE);
+
+            if (patient != null) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("isLoggedIn", true);
+                editor.putString("username", phoneNumber);
+                editor.putBoolean("isAdmin", false);
+                editor.putLong("patientId", patient.getId());
+                editor.apply();
+
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+            } else {
+                Toast.makeText(this, "Invalid phone number or password", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void startAdminActivity() {

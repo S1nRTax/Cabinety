@@ -85,5 +85,14 @@ public class PatientViewModel extends AndroidViewModel {
         return repository.getPatientByLastName(lastName);
     }
 
+    // In PatientViewModel.java, add these methods:
+    public LiveData<Patient> loginPatient(String phoneNumber, String password) {
+        return repository.loginPatient(phoneNumber, password);
+    }
+
+    public LiveData<Patient> getPatientByPhoneNumber(String phoneNumber) {
+        return repository.getPatientByPhoneNumber(phoneNumber);
+    }
+
 
 }

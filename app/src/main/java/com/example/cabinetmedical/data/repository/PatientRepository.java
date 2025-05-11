@@ -95,4 +95,13 @@ public class PatientRepository {
     public LiveData<Patient> getPatientByLastName(String lastName) {
         return patientDao.getPatientByLastName(lastName);
     }
+
+    // In PatientRepository.java, add these methods:
+    public LiveData<Patient> loginPatient(String phoneNumber, String password) {
+        return patientDao.loginPatient(phoneNumber, password);
+    }
+
+    public LiveData<Patient> getPatientByPhoneNumber(String phoneNumber) {
+        return patientDao.getPatientByPhoneNumber(phoneNumber);
+    }
 }

@@ -34,6 +34,14 @@ public abstract class AppDatabase extends RoomDatabase {
                     "FOREIGN KEY(`patientId`) REFERENCES `patients`(`id`) ON DELETE CASCADE)");
         }
     };
+
+    static final Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            // Add the new password column
+            database.execSQL("ALTER TABLE patients ADD COLUMN password TEXT NOT NULL DEFAULT ''");
+        }
+    };
     private static AppDatabase instance;
 
     public abstract PatientDao patientDao();
@@ -46,8 +54,8 @@ public abstract class AppDatabase extends RoomDatabase {
                             context.getApplicationContext(),
                             AppDatabase.class,
                             Constants.DATABASE_NAME)
+                    .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                     .fallbackToDestructiveMigration()
-                    .addMigrations(MIGRATION_1_2)
                     .build();
         }
         return instance;

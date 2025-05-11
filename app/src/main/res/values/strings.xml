@@ -45,6 +45,8 @@
     <string name="blood_type_format">Blood Type: %s</string>
     <string name="no_allergies">No known allergies</string>
     <string name="no_medical_history">No medical history available</string>
+    <string name="accept">accept</string>
+    <string name="cancel">cancel</string>
 
     <string-array name="gender_options">
         <item>Male</item>

@@ -1,0 +1,13 @@
+<!-- res/navigation/nav_graph_patient.xml -->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_patient"
+    app:startDestination="@id/patientHomeFragment">
+
+    <fragment
+        android:id="@+id/patientHomeFragment"
+        android:name="com.example.cabinetmedical.fragments.PatientHomeFragment"
+        android:label="Patient Home" />
+    
+</navigation>

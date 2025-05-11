@@ -68,4 +68,11 @@ public interface PatientDao {
 
     @Query("SELECT * FROM patients WHERE last_name = :lastName LIMIT 1")
     LiveData<Patient> getPatientByLastName(String lastName);
+
+    // In PatientDao.java, add this query:
+    @Query("SELECT * FROM patients WHERE phone = :phoneNumber AND password = :password LIMIT 1")
+    LiveData<Patient> loginPatient(String phoneNumber, String password);
+
+    @Query("SELECT * FROM patients WHERE phone = :phoneNumber LIMIT 1")
+    LiveData<Patient> getPatientByPhoneNumber(String phoneNumber);
 }

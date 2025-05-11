@@ -133,7 +133,8 @@ public class AddPatientFragment extends Fragment {
                 etAddress.getText().toString().trim(),
                 actvBloodType.getText().toString().trim(),
                 etAllergies.getText().toString().trim(),
-                etMedicalHistory.getText().toString().trim()
+                etMedicalHistory.getText().toString().trim(),
+                "patient123default"
         );
 
         // Save patient to database using ViewModel

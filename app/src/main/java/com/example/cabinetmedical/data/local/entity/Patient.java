@@ -21,6 +21,8 @@ public class Patient {
     @ColumnInfo(name = "last_name")
     private String lastName;
 
+    @ColumnInfo(name = "password")
+    private String password;
     @ColumnInfo(name = "date_of_birth")
     private String dateOfBirth;
 
@@ -50,7 +52,7 @@ public class Patient {
      */
     public Patient(@NonNull String firstName, String lastName, String dateOfBirth,
                   String gender, String phone, String email, String address,
-                  String bloodType, String allergies, String medicalHistory) {
+                  String bloodType, String allergies, String medicalHistory, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
@@ -61,9 +63,18 @@ public class Patient {
         this.bloodType = bloodType;
         this.allergies = allergies;
         this.medicalHistory = medicalHistory;
+        this.password = password;
     }
 
     // Getters and Setters
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public long getId() {
         return id;
